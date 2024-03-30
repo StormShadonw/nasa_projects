@@ -1,6 +1,8 @@
 import 'package:nasa_projects/models/destination.dart';
 import 'package:nasa_projects/models/funding_parents.dart';
 import 'package:nasa_projects/models/lead_organization.dart';
+import 'package:nasa_projects/models/library_item.dart';
+import 'package:nasa_projects/models/primary_image.dart';
 import 'package:nasa_projects/models/primary_taxonomy_node.dart.dart';
 import 'package:nasa_projects/models/program.dart';
 import 'package:nasa_projects/models/program_director.dart';
@@ -9,6 +11,7 @@ import 'package:nasa_projects/models/program_manager.dart';
 import 'package:nasa_projects/models/responsible.dart';
 import 'package:nasa_projects/models/state_with_work.dart';
 import 'package:nasa_projects/models/supporting_organization.dart';
+import 'package:nasa_projects/models/transition.dart';
 
 class Project {
   String? acronym;
@@ -16,6 +19,7 @@ class Project {
   String? title;
   List<PrimaryTaxonomyNodes>? primaryTaxonomyNodes;
   int? startTrl;
+  PrimaryImage? primaryImage;
   int? currentTrl;
   int? endTrl;
   String? benefits;
@@ -30,8 +34,8 @@ class Project {
   List<ProgramExecutive>? programExecutives;
   List<ProgramManager>? programManagers;
   String? website;
-  List<Null>? libraryItems;
-  List<Null>? transitions;
+  List<LibraryItem>? libraryItems;
+  List<Transition>? transitions;
   ResponsibleMd? responsibleMd;
   Program? program;
   LeadOrganization? leadOrganization;
@@ -51,6 +55,7 @@ class Project {
       this.primaryTaxonomyNodes,
       this.startTrl,
       this.currentTrl,
+      this.primaryImage,
       this.endTrl,
       this.benefits,
       this.description,
@@ -88,6 +93,9 @@ class Project {
         primaryTaxonomyNodes!.add(new PrimaryTaxonomyNodes.fromJson(v));
       });
     }
+    primaryImage = json['primaryImage'] != null
+        ? new PrimaryImage.fromJson(json['primaryImage'])
+        : null;
     startTrl = json['startTrl'];
     currentTrl = json['currentTrl'];
     endTrl = json['endTrl'];
@@ -123,18 +131,18 @@ class Project {
       });
     }
     website = json['website'];
-    // if (json['libraryItems'] != null) {
-    //   libraryItems = <Null>[];
-    //   json['libraryItems'].forEach((v) {
-    //     libraryItems!.add(new Null.fromJson(v));
-    //   });
-    // }
-    // if (json['transitions'] != null) {
-    //   transitions = <Null>[];
-    //   json['transitions'].forEach((v) {
-    //     transitions!.add(new Null.fromJson(v));
-    //   });
-    // }
+    if (json['libraryItems'] != null) {
+      libraryItems = <LibraryItem>[];
+      json['libraryItems'].forEach((v) {
+        libraryItems!.add(new LibraryItem.fromJson(v));
+      });
+    }
+    if (json['transitions'] != null) {
+      transitions = <Transition>[];
+      json['transitions'].forEach((v) {
+        transitions!.add(new Transition.fromJson(v));
+      });
+    }
     responsibleMd = json['responsibleMd'] != null
         ? new ResponsibleMd.fromJson(json['responsibleMd'])
         : null;
@@ -203,14 +211,17 @@ class Project {
           this.programManagers!.map((v) => v.toJson()).toList();
     }
     data['website'] = this.website;
-    // if (this.libraryItems != null) {
-    //   data['libraryItems'] = this.libraryItems!.map((v) => v.toJson()).toList();
-    // }
-    // if (this.transitions != null) {
-    //   data['transitions'] = this.transitions!.map((v) => v.toJson()).toList();
-    // }
+    if (this.libraryItems != null) {
+      data['libraryItems'] = this.libraryItems!.map((v) => v.toJson()).toList();
+    }
+    if (this.transitions != null) {
+      data['transitions'] = this.transitions!.map((v) => v.toJson()).toList();
+    }
     if (this.responsibleMd != null) {
       data['responsibleMd'] = this.responsibleMd!.toJson();
+    }
+    if (this.primaryImage != null) {
+      data['primaryImage'] = this.primaryImage!.toJson();
     }
     if (this.program != null) {
       data['program'] = this.program!.toJson();

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           onError: Colors.white,
           onBackground: Colors.white,
           surface: Colors.white,
-          onSurface: Colors.white,
+          onSurface: Colors.black87,
         ),
         textTheme: TextTheme(),
         useMaterial3: true,
