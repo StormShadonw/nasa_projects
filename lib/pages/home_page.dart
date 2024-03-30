@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nasa_projects/helpers/errors.dart';
 import 'package:nasa_projects/models/project.dart';
 import 'package:nasa_projects/providers/data_provider.dart';
@@ -55,36 +56,42 @@ class _HomePageState extends State<HomePage> {
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
-      body: Container(
-        width: size.width,
-        height: size.height,
-        alignment: Alignment.center,
-        child: _isLoading
-            ? const Loader()
-            : ListView.builder(
-                itemCount: _projects.length,
-                itemBuilder: (context, projectIndex) {
-                  return Text(
-                    _projects[projectIndex].projectId.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
+      body: SafeArea(
+        child: Container(
+          width: size.width,
+          height: size.height,
+          alignment: Alignment.center,
+          child: _isLoading
+              ? const Loader()
+              : Expanded(
+                  child: Container(
+                    child: ListView.builder(
+                      itemCount: _projects.length,
+                      itemBuilder: (context, projectIndex) {
+                        return Text(
+                          _projects[projectIndex].projectId.toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        );
+                        // return ListView.builder(
+                        //   shrinkWrap: true,
+                        //   physics: ClampingScrollPhysics(),
+                        //   itemCount: _projects[projectIndex].transitions == null
+                        //       ? 0
+                        //       : _projects[projectIndex].primaryImage!,
+                        //   itemBuilder: (context, index) => ListTile(
+                        //     title: Text(
+                        //       _projects[projectIndex].transitions![index].path ?? "",
+                        //       style: TextStyle(color: Colors.white),
+                        //     ),
+                        //   ),
+                        // );
+                      },
                     ),
-                  );
-                  // return ListView.builder(
-                  //   shrinkWrap: true,
-                  //   physics: ClampingScrollPhysics(),
-                  //   itemCount: _projects[projectIndex].transitions == null
-                  //       ? 0
-                  //       : _projects[projectIndex].primaryImage!,
-                  //   itemBuilder: (context, index) => ListTile(
-                  //     title: Text(
-                  //       _projects[projectIndex].transitions![index].path ?? "",
-                  //       style: TextStyle(color: Colors.white),
-                  //     ),
-                  //   ),
-                  // );
-                },
-              ),
+                  ),
+                ),
+        ),
       ),
     );
   }
